@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
-    @Autowired
+    @Autowired 
     private UsuarioService usuarioService;      
 
     // Obtener todos los usuarios
