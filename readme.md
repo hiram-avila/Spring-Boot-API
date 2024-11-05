@@ -23,4 +23,32 @@ Este repositorio incluye un ejemplo de cómo crear y ejecutar una base de datos 
 
    ```bash
    docker ps
+4. **Conectar a la Base de Datos MySQL**
+
+   Una vez que el contenedor esté en ejecución, puedes conectarte a la base de datos MySQL. Hay varias formas de hacerlo:
+
+   - **Usando el Cliente MySQL desde la Línea de Comandos**
+
+     Si tienes el cliente de MySQL instalado en tu máquina, puedes conectarte al contenedor ejecutando:
+
+     ```bash
+     mysql -h 127.0.0.1 -P 3306 -u root -p
+     ```
+
+     Se te pedirá que ingreses la contraseña que especificaste anteriormente (`mi_contraseña`).
+
+   - **Usando Docker Exec**
+
+     También puedes conectarte directamente al contenedor utilizando `docker exec`:
+
+     ```bash
+     docker exec -it mi_mysql mysql -u root -p
+     ```
+
+     Luego, ingresa la contraseña cuando se te solicite.
+
+   - **Usando un Cliente Gráfico (como MySQL Workbench)**
+
+     Si prefieres una interfaz gráfica, puedes usar herramientas como MySQL Workbench, DBeaver o HeidiSQL. Conéctate utilizando `localhost` como host, `3306` como puerto, `root` como usuario y `mi_contraseña` como contraseña.
+
 
