@@ -17,4 +17,10 @@ Este repositorio incluye un ejemplo de cómo crear y ejecutar una base de datos 
 
    ```bash
    docker run --name mi_mysql -e MYSQL_ROOT_PASSWORD=mi_contraseña -p 3306:3306 -d mysql:latest
+3. **Verificar que el Contenedor se Está Ejecutando**
+
+   Para confirmar que el contenedor de MySQL se está ejecutando correctamente, usa el siguiente comando:
+
+   ```bash
+   docker ps
 
