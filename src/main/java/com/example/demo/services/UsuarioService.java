@@ -1,47 +1,46 @@
 package com.example.demo.services;
 
+import com.example.demo.models.Usuario;
+import com.example.demo.repositories.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
 
-    private List<String> usuarios = new ArrayList<>();
+    private final UsuarioRepository usuarioRepository;
 
-    // Obtener todos los usuarios
-    public List<String> getUsuarios() {
-        return usuarios;
+    @Autowired
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
-    // Agregar un nuevo usuario
-    public void addUsuario(String usuario) {
-        usuarios.add(usuario);
+    // Obtener todos los usuarios
+    public List<Usuario> getAllUsuarios() {
+        return usuarioRepository.findAll();
     }
 
     // Obtener un usuario por ID
-    public String getUsuario(int id) {
-        if (id >= 0 && id < usuarios.size()) {
-            return usuarios.get(id);
-        }
-        return null;
+    public Optional<Usuario> getUsuarioById(int id) {
+        return usuarioRepository.findById(id);
     }
 
-    // Actualizar un usuario por ID
-    public boolean updateUsuario(int id, String usuario) {
-        if (id >= 0 && id < usuarios.size()) {
-            usuarios.set(id, usuario);
-            return true;
-        }
-        return false;
+    // Crear un nuevo usuario
+    public Usuario createUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
 
-    // Eliminar un usuario por ID
-    public boolean deleteUsuario(int id) {
-        if (id >= 0 && id < usuarios.size()) {
-            usuarios.remove(id);
-            return true;
-        }
-        return false;
+    // Actualizar un usuario
+    public Usuario updateUsuario(int id, Usuario usuario) {
+        usuario.setId(id);
+        return usuarioRepository.save(usuario);
+    }
+
+    // Eliminar un usuario
+    public void deleteUsuario(int id) {
+        usuarioRepository.deleteById(id);
     }
 }
