@@ -1,49 +1,51 @@
 package com.example.demo.controllers;
 
+import com.example.demo.models.Usuario;
 import com.example.demo.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
-    @Autowired 
-    private UsuarioService usuarioService;      
+    private final UsuarioService usuarioService;
 
-    // Obtener todos los usuarios
+    @Autowired
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
     @GetMapping
-    public List<String> getUsuarios() {
-        return usuarioService.getUsuarios();
+    public List<Usuario> getAllUsuarios() {
+        return usuarioService.getAllUsuarios();
     }
 
-    // Agregar un nuevo usuario
-    @PostMapping
-    public String addUsuario(@RequestBody String usuario) {
-        usuarioService.addUsuario(usuario);
-        return "Usuario agregado!";
-    }
-
-    // Obtener un usuario por ID
     @GetMapping("/{id}")
-    public String getUsuario(@PathVariable int id) {
-        String usuario = usuarioService.getUsuario(id);
-        return (usuario != null) ? usuario : "Usuario no encontrado";
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable int id) {
+        Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
+        return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Actualizar un usuario por ID
+    @PostMapping
+    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
+        Usuario createdUsuario = usuarioService.createUsuario(usuario);
+        return new ResponseEntity<>(createdUsuario, HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}")
-    public String updateUsuario(@PathVariable int id, @RequestBody String usuario) {
-        boolean updated = usuarioService.updateUsuario(id, usuario);
-        return updated ? "Usuario actualizado!" : "Usuario no encontrado";
+    public ResponseEntity<Usuario> updateUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
+        return ResponseEntity.ok(usuarioService.updateUsuario(id, usuario));
     }
 
-    // Eliminar un usuario por ID
     @DeleteMapping("/{id}")
-    public String deleteUsuario(@PathVariable int id) {
-        boolean deleted = usuarioService.deleteUsuario(id);
-        return deleted ? "Usuario eliminado!" : "Usuario no encontrado";
+    public ResponseEntity<Void> deleteUsuario(@PathVariable int id) {
+        usuarioService.deleteUsuario(id);
+        return ResponseEntity.noContent().build();
     }
 }
