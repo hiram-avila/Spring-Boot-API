@@ -1,3 +1,6 @@
+
+# Architectura: 
+![image](https://github.com/user-attachments/assets/1591ffee-c365-4554-9abf-916af71d3597)
 # 🐳 Instrucciones para Crear una Base de Datos MySQL con Docker
 
 Este repositorio incluye un ejemplo de cómo crear y ejecutar una base de datos MySQL utilizando Docker.
